@@ -1,28 +1,47 @@
 {
-  "name": "product-catalog",
+  "name": "trauma-in-a-can",
   "version": "1.0.0",
-  "description": "Full-stack Product Catalog application with Redis cache",
+  "description": "Trauma In A Can™ - Full-stack e-shop for bottled traumatic experiences with Redis cache",
   "private": true,
   "workspaces": [
     "backend",
     "frontend"
   ],
   "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run start:dev",
     "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "docker:up": "docker-compose up --build -d",
+    "docker:up:dev": "docker-compose -f docker-compose.dev.yml up -d",
     "docker:down": "docker-compose down",
-    "docker:down:volumes": "docker-compose down -v"
+    "docker:down:volumes": "docker-compose down -v",
+    "docker:logs": "docker-compose logs -f",
+    "docker:logs:backend": "docker-compose logs -f backend",
+    "docker:logs:frontend": "docker-compose logs -f frontend",
+    "docker:restart": "docker-compose restart",
+    "db:seed": "docker exec -i product-catalog-postgres psql -U postgres -d product_catalog -f /docker-entrypoint-initdb.d/../seed.sql"
   },
   "keywords": [
-    "product-catalog",
+    "trauma-in-a-can",
+    "e-commerce",
     "redis",
     "cache",
     "nestjs",
-    "nextjs"
+    "nextjs",
+    "postgresql",
+    "docker"
   ],
-  "author": "",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vochechule/Trauma-In-A-Can.git"
+  },
+  "author": "vochechule",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

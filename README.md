@@ -362,19 +362,72 @@ npm run test
 
 ## 📸 Screenshots
 
-_Zde budou přidány screenshoty aplikace po implementaci:_
-- Dashboard s přehledem produktů
-- Detail produktu s cache indikátorem
-- Formulář pro přidání/úpravu produktu
-- Cache statistiky
+### 🏠 Homepage - Product Grid
+- Dark theme s červenými akcenty
+- Grid produktů s cache indikátory
+- Real-time cache statistiky
+- Vyhledávání a kategorie filtry
+
+### 🥫 Product Detail
+- Velký náhled produktu
+- Cache hit/miss indikátor (⚡ CACHED / 💾 DB)
+- Detailní informace (cena, skladem, kategorie)
+- Edit a Delete akce
+
+### ➕ Admin Forms
+- Vytváření nových traumat
+- Editace existujících produktů
+- Validace všech polí
+- Real-time feedback
+
+### ⚡ Cache Performance
+- Live cache hit/miss statistiky
+- Hit rate percentage
+- Visual progress bar
+- Auto-refresh každých 5s
+
+## 🎨 Branding - Trauma In A Can™
+
+### Concept
+E-shop prodávající **plechovky s vůněmi traumatických zážitků**:
+- 🦷 Čekárna u zubaře
+- 🚽 Veřejné záchody
+- 🚗 Fronta na úřadě (DMV)
+- 📅 Pondělní ráno
+- A mnoho dalších...
+
+### Design Language
+- **Barvy**: Dark theme (šedá + černá) s červenými akcenty
+- **Font**: System fonts pro optimální performance
+- **Ikony**: Emoji pro autentický a vtipný feeling
+- **Animace**: Jemné hover efekty a transitions
+
+### Tone of Voice
+- Humorný a sebevědomý
+- "Premium bottled traumatic experiences"
+- "Warning: May cause flashbacks"
+- Mix seriózního e-commerce UX s vtipným obsahem
+
+## 📚 Dokumentace
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Rychlý start guide (5 minut)
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Poznámky pro vývojáře
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Jak přispět do projektu
+- **[frontend/README.md](frontend/README.md)** - Frontend specifická dokumentace
+- **[database/README.md](database/README.md)** - Database setup a schema
 
 ## 👥 Autoři
 
-- Váš tým
+- [@vochechule](https://github.com/vochechule) - Frontend & Project Setup
+- Backend Developer - TBD
+
+## 🤝 Contributing
+
+Chcete přispět? Skvělé! Přečtěte si [CONTRIBUTING.md](CONTRIBUTING.md) pro guidelines.
 
 ## 📄 Licence
 
-MIT
+MIT License - viz [LICENSE](LICENSE) soubor pro detaily.
 
 ## 🎓 Poznámky pro hodnocení
 
