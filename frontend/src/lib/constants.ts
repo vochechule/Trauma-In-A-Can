@@ -8,7 +8,8 @@ export const APP_TAGLINE = 'Bottled Traumatic Experiences Since 2025';
 /**
  * API Configuration
  */
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 /**
  * Pagination
@@ -88,5 +89,6 @@ export const SAMPLE_TRAUMAS = [
 /**
  * Image placeholders
  */
-export const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/300x300?text=Trauma+Can';
+export const PLACEHOLDER_IMAGE =
+  'https://via.placeholder.com/300x300?text=Trauma+Can';
 export const DEFAULT_CAN_EMOJI = '🥫';
