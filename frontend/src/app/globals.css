@@ -46,7 +46,7 @@
 
 @layer components {
   .card {
-    @apply bg-surface-800/60 border border-surface-700 rounded-2xl shadow-xl shadow-brand-900/10 backdrop-blur-md;
+    @apply bg-[#12182699] border border-[#1f2937] rounded-2xl shadow-xl shadow-brand-900/10 backdrop-blur-md;
   }
 
   .pill {
@@ -58,6 +58,6 @@
   }
 
   .btn-ghost {
-    @apply bg-surface-700 hover:bg-surface-600 text-gray-200 font-medium px-4 py-2 rounded-lg transition-colors;
+    @apply bg-[#1f2937] hover:bg-[#1f2937cc] text-gray-200 font-medium px-4 py-2 rounded-lg transition-colors;
   }
 }
