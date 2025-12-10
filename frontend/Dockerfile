@@ -2,17 +2,19 @@
 FROM node:20-alpine AS deps
 
 WORKDIR /app
+RUN corepack enable
 
 # Copy package files
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
 # Stage 2: Builder
 FROM node:20-alpine AS builder
 
 WORKDIR /app
+RUN corepack enable
 
 # Copy dependencies
 COPY --from=deps /app/node_modules ./node_modules
@@ -20,11 +22,14 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy source code
 COPY . .
 
+# Ensure public directory exists even if empty
+RUN mkdir -p public
+
 # Set environment variable
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # Stage 3: Runner
 FROM node:20-alpine AS runner

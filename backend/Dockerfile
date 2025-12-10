@@ -1,30 +1,41 @@
-# Stage 1: Build
+# Stage 1: Dependencies
+FROM node:20-alpine AS deps
+
+WORKDIR /app
+RUN corepack enable
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies with frozen lockfile
+RUN pnpm install --frozen-lockfile
+
+# Stage 2: Build
 FROM node:20-alpine AS builder
 
 WORKDIR /app
+RUN corepack enable
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
+# Copy dependencies
+COPY --from=deps /app/node_modules ./node_modules
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
-# Stage 2: Production
+# Stage 3: Production
 FROM node:20-alpine
 
 WORKDIR /app
+RUN corepack enable
 
 # Copy package files
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
 # Install production dependencies only
-RUN npm ci --only=production
+RUN pnpm install --frozen-lockfile --prod
 
 # Copy built application from builder
 COPY --from=builder /app/dist ./dist
