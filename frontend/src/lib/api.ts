@@ -8,7 +8,9 @@ import {
   ProductResponse,
 } from '@/types/product';
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api`;
+const API_URL = `${
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+}/api`;
 
 class ApiClient {
   private client: AxiosInstance;
@@ -22,6 +24,19 @@ class ApiClient {
     });
   }
 
+  private normalizePayload<T extends CreateProductDto | UpdateProductDto>(
+    payload: T
+  ): T {
+    const cleanPayload: Record<string, unknown> = { ...payload };
+
+    if ('imageUrl' in cleanPayload && typeof cleanPayload.imageUrl === 'string') {
+      const trimmed = (cleanPayload.imageUrl as string).trim();
+      cleanPayload.imageUrl = trimmed.length ? trimmed : undefined;
+    }
+
+    return cleanPayload as T;
+  }
+
   // Products endpoints
   async getProducts(params?: {
     page?: number;
@@ -33,7 +48,9 @@ class ApiClient {
     sortBy?: 'name' | 'price' | 'category' | 'createdAt' | 'updatedAt';
     order?: 'ASC' | 'DESC';
   }): Promise<PaginatedProducts> {
-    const { data } = await this.client.get<PaginatedProducts>('/products', { params });
+    const { data } = await this.client.get<PaginatedProducts>('/products', {
+      params,
+    });
     return data;
   }
 
@@ -43,12 +60,14 @@ class ApiClient {
   }
 
   async createProduct(product: CreateProductDto): Promise<Product> {
-    const { data } = await this.client.post<Product>('/products', product);
+    const body = this.normalizePayload(product);
+    const { data } = await this.client.post<Product>('/products', body);
     return data;
   }
 
   async updateProduct(id: number, product: UpdateProductDto): Promise<Product> {
-    const { data } = await this.client.patch<Product>(`/products/${id}`, product);
+    const body = this.normalizePayload(product);
+    const { data } = await this.client.patch<Product>(`/products/${id}`, body);
     return data;
   }
 

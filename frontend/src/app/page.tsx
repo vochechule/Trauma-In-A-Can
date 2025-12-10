@@ -70,9 +70,7 @@ export default function Home() {
     }
   };
 
-  const handleCreateProduct = async (
-    data: CreateProductDto | UpdateProductDto
-  ) => {
+  const handleCreateProduct = async (data: CreateProductDto | UpdateProductDto) => {
     const payload = data as CreateProductDto;
     try {
       await api.createProduct(payload);
