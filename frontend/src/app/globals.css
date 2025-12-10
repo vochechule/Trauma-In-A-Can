@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
 
 * {
   box-sizing: border-box;
@@ -14,12 +15,7 @@ body {
 
 body {
   color: #e5e7eb;
-  background: linear-gradient(
-    to bottom right,
-    #111827,
-    #1f2937,
-    #111827
-  );
+  background: linear-gradient(to bottom right, #111827, #1f2937, #111827);
   min-height: 100vh;
 }
 
