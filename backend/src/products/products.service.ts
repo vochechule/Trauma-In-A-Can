@@ -104,7 +104,7 @@ export class ProductsService {
       },
     };
 
-    await this.cacheManager.set(cacheKey, response, { ttl: this.cacheTtl });
+    await this.cacheManager.set(cacheKey, response, this.cacheTtl);
 
     return { ...response, cacheHit: false };
   }
@@ -123,7 +123,7 @@ export class ProductsService {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
 
-    await this.cacheManager.set(cacheKey, product, { ttl: this.cacheTtl });
+    await this.cacheManager.set(cacheKey, product, this.cacheTtl);
 
     return { data: product, cacheHit: false };
   }
@@ -213,6 +213,10 @@ export class ProductsService {
     if (productId) {
       await this.cacheManager.del(this.getProductCacheKey(productId));
     }
-    await this.cacheManager.reset();
+    // cache-manager v7 does not expose reset in the typings; call store.reset when available
+    const store: unknown = (this.cacheManager as any).store;
+    if (store && typeof (store as any).reset === 'function') {
+      await (store as any).reset();
+    }
   }
 }
