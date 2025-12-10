@@ -10,6 +10,13 @@ NestJS service providing the Product Catalog REST API with PostgreSQL persistenc
 
 ## Running locally
 ```bash
+# 1) Start local infra (PostgreSQL + Redis)
+pnpm dev:infra
+
+# 2) Prepare env (optional; defaults already match docker-compose.dev.yml)
+cp backend/.env.example backend/.env
+
+# 3) Install deps and start Nest in watch mode
 cd backend
 pnpm install
 pnpm run start:dev
