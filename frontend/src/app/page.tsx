@@ -33,7 +33,11 @@ export default function Home() {
       if (selectedCategory) params.category = selectedCategory;
       
       const data = await api.getProducts(params);
-      setProducts(data.data);
+      const productsWithCacheFlag: ProductWithCache[] = data.data.map((p) => ({
+        ...p,
+        cacheHit: data.cacheHit,
+      }));
+      setProducts(productsWithCacheFlag);
       
       // Extract unique categories
       const uniqueCategories = Array.from(
@@ -210,9 +214,9 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-8 flex items-center justify-center">
-                {selectedProduct.image_url ? (
+                {selectedProduct.imageUrl ? (
                   <img
-                    src={selectedProduct.image_url}
+                    src={selectedProduct.imageUrl}
                     alt={selectedProduct.name}
                     className="max-w-full h-auto rounded"
                   />
@@ -241,7 +245,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-sm text-gray-400 mb-1">Stock</h3>
-                    <p className="text-gray-200">{selectedProduct.stock_quantity} units</p>
+                    <p className="text-gray-200">{selectedProduct.stockQuantity} units</p>
                   </div>
                 </div>
 
@@ -263,8 +267,8 @@ export default function Home() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-700 text-xs text-gray-500">
-              <p>Created: {new Date(selectedProduct.created_at).toLocaleString()}</p>
-              <p>Updated: {new Date(selectedProduct.updated_at).toLocaleString()}</p>
+              <p>Created: {new Date(selectedProduct.createdAt).toLocaleString()}</p>
+              <p>Updated: {new Date(selectedProduct.updatedAt).toLocaleString()}</p>
             </div>
           </div>
         </div>

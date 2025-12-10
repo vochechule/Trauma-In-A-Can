@@ -9,8 +9,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onClick }: ProductCardProps) {
-  const isLowStock = product.stock_quantity < 10;
-  const isOutOfStock = product.stock_quantity === 0;
+  const isLowStock = product.stockQuantity < 10;
+  const isOutOfStock = product.stockQuantity === 0;
 
   return (
     <div
@@ -34,9 +34,9 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
 
       {/* Product image */}
       <div className="relative h-64 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
-        {product.image_url ? (
+        {product.imageUrl ? (
           <Image
-            src={product.image_url}
+            src={product.imageUrl}
             alt={product.name}
             fill
             className="object-cover"
@@ -84,7 +84,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
           >
             {isOutOfStock
               ? 'Out of stock'
-              : `${product.stock_quantity} in stock`}
+              : `${product.stockQuantity} in stock`}
           </span>
         </div>
       </div>

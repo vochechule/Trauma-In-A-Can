@@ -5,10 +5,10 @@ import {
   CreateProductDto,
   UpdateProductDto,
   PaginatedProducts,
-  CacheStats,
+  ProductResponse,
 } from '@/types/product';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api`;
 
 class ApiClient {
   private client: AxiosInstance;
@@ -28,14 +28,18 @@ class ApiClient {
     limit?: number;
     category?: string;
     search?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    sortBy?: 'name' | 'price' | 'category' | 'createdAt' | 'updatedAt';
+    order?: 'ASC' | 'DESC';
   }): Promise<PaginatedProducts> {
     const { data } = await this.client.get<PaginatedProducts>('/products', { params });
     return data;
   }
 
   async getProduct(id: number): Promise<ProductWithCache> {
-    const { data } = await this.client.get<ProductWithCache>(`/products/${id}`);
-    return data;
+    const { data } = await this.client.get<ProductResponse>(`/products/${id}`);
+    return { ...data.data, cacheHit: data.cacheHit };
   }
 
   async createProduct(product: CreateProductDto): Promise<Product> {
@@ -50,23 +54,6 @@ class ApiClient {
 
   async deleteProduct(id: number): Promise<void> {
     await this.client.delete(`/products/${id}`);
-  }
-
-  async searchProducts(query: string): Promise<Product[]> {
-    const { data } = await this.client.get<Product[]>('/products/search', {
-      params: { q: query },
-    });
-    return data;
-  }
-
-  // Cache endpoints
-  async getCacheStats(): Promise<CacheStats> {
-    const { data } = await this.client.get<CacheStats>('/cache/stats');
-    return data;
-  }
-
-  async clearCache(): Promise<void> {
-    await this.client.delete('/cache/clear');
   }
 }
 

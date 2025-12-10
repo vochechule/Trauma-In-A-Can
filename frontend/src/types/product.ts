@@ -4,10 +4,10 @@ export interface Product {
   description: string;
   price: number;
   category: string;
-  stock_quantity: number;
-  image_url?: string;
-  created_at: string;
-  updated_at: string;
+  stockQuantity: number;
+  imageUrl?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ProductWithCache extends Product {
@@ -19,8 +19,8 @@ export interface CreateProductDto {
   description: string;
   price: number;
   category: string;
-  stock_quantity: number;
-  image_url?: string;
+  stockQuantity: number;
+  imageUrl?: string;
 }
 
 export interface UpdateProductDto {
@@ -28,22 +28,23 @@ export interface UpdateProductDto {
   description?: string;
   price?: number;
   category?: string;
-  stock_quantity?: number;
-  image_url?: string;
+  stockQuantity?: number;
+  imageUrl?: string | null;
 }
 
 export interface PaginatedProducts {
-  data: ProductWithCache[];
-  total: number;
-  page: number;
-  limit: number;
-  cacheHit?: boolean;
+  data: Product[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+  };
+  cacheHit: boolean;
 }
 
-export interface CacheStats {
-  hits: number;
-  misses: number;
-  hitRate: number;
+export interface ProductResponse {
+  data: Product;
+  cacheHit: boolean;
 }
 
 export interface ApiError {

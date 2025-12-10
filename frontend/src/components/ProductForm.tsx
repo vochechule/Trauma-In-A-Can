@@ -16,8 +16,8 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
     description: product?.description || '',
     price: product?.price || 0,
     category: product?.category || '',
-    stock_quantity: product?.stock_quantity || 0,
-    image_url: product?.image_url || '',
+    stockQuantity: product?.stockQuantity || 0,
+    imageUrl: product?.imageUrl || '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,7 +35,7 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'price' || name === 'stock_quantity' ? Number(value) : value,
+      [name]: name === 'price' || name === 'stockQuantity' ? Number(value) : value,
     }));
   };
 
@@ -94,8 +94,8 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
           </label>
           <input
             type="number"
-            name="stock_quantity"
-            value={formData.stock_quantity}
+            name="stockQuantity"
+            value={formData.stockQuantity}
             onChange={handleChange}
             required
             min="0"
@@ -123,14 +123,14 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Image URL (optional)
         </label>
-        <input
-          type="url"
-          name="image_url"
-          value={formData.image_url}
-          onChange={handleChange}
-          placeholder="https://example.com/image.jpg"
-          className="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-red-500"
-        />
+          <input
+            type="url"
+            name="imageUrl"
+            value={formData.imageUrl}
+            onChange={handleChange}
+            placeholder="https://example.com/image.jpg"
+            className="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-red-500"
+          />
       </div>
 
       <div className="flex gap-3 pt-4">
