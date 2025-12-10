@@ -33,7 +33,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
       )}
 
       {/* Product image */}
-      <div className="relative h-64 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+      <div className="relative h-64 bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}

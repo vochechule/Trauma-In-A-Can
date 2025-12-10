@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ProductWithCache, CreateProductDto, UpdateProductDto, Product } from '@/types/product';
+import {
+  ProductWithCache,
+  CreateProductDto,
+  UpdateProductDto,
+  Product,
+} from '@/types/product';
 import { api } from '@/lib/api';
 import ProductCard from '@/components/ProductCard';
 import SearchBar from '@/components/SearchBar';
@@ -11,9 +16,12 @@ import ProductForm from '@/components/ProductForm';
 export default function Home() {
   const [products, setProducts] = useState<ProductWithCache[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProduct, setSelectedProduct] = useState<ProductWithCache | null>(null);
+  const [selectedProduct, setSelectedProduct] =
+    useState<ProductWithCache | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | undefined>(undefined);
+  const [editingProduct, setEditingProduct] = useState<Product | undefined>(
+    undefined
+  );
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -27,18 +35,18 @@ export default function Home() {
     try {
       setLoading(true);
       setError(null);
-      
+
       const params: any = {};
       if (searchQuery) params.search = searchQuery;
       if (selectedCategory) params.category = selectedCategory;
-      
+
       const data = await api.getProducts(params);
       const productsWithCacheFlag: ProductWithCache[] = data.data.map((p) => ({
         ...p,
         cacheHit: data.cacheHit,
       }));
       setProducts(productsWithCacheFlag);
-      
+
       // Extract unique categories
       const uniqueCategories = Array.from(
         new Set(data.data.map((p) => p.category))
@@ -62,9 +70,12 @@ export default function Home() {
     }
   };
 
-  const handleCreateProduct = async (data: CreateProductDto) => {
+  const handleCreateProduct = async (
+    data: CreateProductDto | UpdateProductDto
+  ) => {
+    const payload = data as CreateProductDto;
     try {
-      await api.createProduct(data);
+      await api.createProduct(payload);
       setShowForm(false);
       setEditingProduct(undefined);
       await loadProducts();
@@ -76,7 +87,7 @@ export default function Home() {
 
   const handleUpdateProduct = async (data: UpdateProductDto) => {
     if (!editingProduct) return;
-    
+
     try {
       await api.updateProduct(editingProduct.id, data);
       setShowForm(false);
@@ -90,10 +101,14 @@ export default function Home() {
   };
 
   const handleDeleteProduct = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this trauma? This action cannot be undone.')) {
+    if (
+      !confirm(
+        'Are you sure you want to delete this trauma? This action cannot be undone.'
+      )
+    ) {
       return;
     }
-    
+
     try {
       await api.deleteProduct(id);
       setSelectedProduct(null);
@@ -120,7 +135,8 @@ export default function Home() {
           Experience Life's Most Uncomfortable Moments, Bottled Fresh Daily
         </p>
         <p className="text-sm text-gray-500">
-          🥫 Premium Quality • 💯 100% Authentic • ⚡ Redis-Cached for Your Convenience
+          🥫 Premium Quality • 💯 100% Authentic • ⚡ Redis-Cached for Your
+          Convenience
         </p>
       </div>
 
@@ -142,9 +158,11 @@ export default function Home() {
         <div className="lg:col-span-2">
           <CacheIndicator />
         </div>
-        
+
         <div className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-lg p-4">
-          <h3 className="text-sm font-bold text-gray-300 mb-3">Admin Actions</h3>
+          <h3 className="text-sm font-bold text-gray-300 mb-3">
+            Admin Actions
+          </h3>
           <button
             onClick={() => {
               setShowForm(true);
@@ -173,7 +191,9 @@ export default function Home() {
             </h2>
             <ProductForm
               product={editingProduct}
-              onSubmit={editingProduct ? handleUpdateProduct : handleCreateProduct}
+              onSubmit={
+                editingProduct ? handleUpdateProduct : handleCreateProduct
+              }
               onCancel={() => {
                 setShowForm(false);
                 setEditingProduct(undefined);
@@ -188,7 +208,9 @@ export default function Home() {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-start mb-4">
-              <h2 className="text-3xl font-bold text-white">{selectedProduct.name}</h2>
+              <h2 className="text-3xl font-bold text-white">
+                {selectedProduct.name}
+              </h2>
               <button
                 onClick={() => setSelectedProduct(null)}
                 className="text-gray-400 hover:text-white text-2xl"
@@ -207,13 +229,15 @@ export default function Home() {
                       : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500'
                   }`}
                 >
-                  {selectedProduct.cacheHit ? '⚡ Loaded from Cache' : '💾 Loaded from Database'}
+                  {selectedProduct.cacheHit
+                    ? '⚡ Loaded from Cache'
+                    : '💾 Loaded from Database'}
                 </span>
               </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-8 flex items-center justify-center">
+              <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-lg p-8 flex items-center justify-center">
                 {selectedProduct.imageUrl ? (
                   <img
                     src={selectedProduct.imageUrl}
@@ -245,7 +269,9 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-sm text-gray-400 mb-1">Stock</h3>
-                    <p className="text-gray-200">{selectedProduct.stockQuantity} units</p>
+                    <p className="text-gray-200">
+                      {selectedProduct.stockQuantity} units
+                    </p>
                   </div>
                 </div>
 
@@ -267,8 +293,12 @@ export default function Home() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-700 text-xs text-gray-500">
-              <p>Created: {new Date(selectedProduct.createdAt).toLocaleString()}</p>
-              <p>Updated: {new Date(selectedProduct.updatedAt).toLocaleString()}</p>
+              <p>
+                Created: {new Date(selectedProduct.createdAt).toLocaleString()}
+              </p>
+              <p>
+                Updated: {new Date(selectedProduct.updatedAt).toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
@@ -284,7 +314,9 @@ export default function Home() {
         <div className="text-center py-12 bg-gray-800/50 rounded-lg border border-gray-700">
           <div className="text-6xl mb-4">😢</div>
           <p className="text-xl text-gray-400 mb-2">No traumas found</p>
-          <p className="text-sm text-gray-500">Try adjusting your search or filters</p>
+          <p className="text-sm text-gray-500">
+            Try adjusting your search or filters
+          </p>
         </div>
       ) : (
         <div>
@@ -293,7 +325,7 @@ export default function Home() {
               Available Traumas ({products.length})
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductCard
@@ -309,7 +341,10 @@ export default function Home() {
       {/* Fun footer note */}
       <div className="text-center py-8 text-sm text-gray-500">
         <p>💡 Pro tip: Refresh the page to see cache hits increase!</p>
-        <p className="mt-2">All traumas are stored in PostgreSQL and cached in Redis for optimal performance.</p>
+        <p className="mt-2">
+          All traumas are stored in PostgreSQL and cached in Redis for optimal
+          performance.
+        </p>
       </div>
     </div>
   );

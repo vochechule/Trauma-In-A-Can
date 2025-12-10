@@ -10,9 +10,11 @@ interface ProductFormProps {
   onCancel: () => void;
 }
 
+type ProductFormData = CreateProductDto | UpdateProductDto;
+
 export default function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProductFormData>({
     name: product?.name || '',
     description: product?.description || '',
     price: product?.price || 0,
