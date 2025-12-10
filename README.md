@@ -1,4 +1,4 @@
-# Product Catalog - Full-Stack aplikace s Redis Cache
+# Trauma In A Can™ - Product Catalog with Redis Cache
 
 Full-stack webová aplikace pro správu a zobrazování produktů v e-shopu s využitím Redis cache pro optimalizaci výkonu.
 
@@ -99,22 +99,18 @@ docker-compose logs -f
 
 ### 3. Spuštění v development režimu
 
-Pro vývoj můžete spustit pouze databázi a Redis:
+Pro vývoj můžete spustit pouze databázi a Redis, a používat pnpm workspace skripty:
 
 ```bash
 # Spuštění pouze DB a Redis
 docker-compose -f docker-compose.dev.yml up -d
 
-# V separátních terminálech:
-# Backend
-cd backend
-npm install
-npm run start:dev
+# Backend (v jiném terminálu)
+pnpm install -r
+pnpm dev:backend
 
-# Frontend
-cd frontend
-npm install
-npm run dev
+# Frontend (turbopack)
+pnpm dev:frontend
 ```
 
 ### 4. Přístup k aplikaci
