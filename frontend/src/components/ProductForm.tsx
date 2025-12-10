@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type React from 'react';
 import { CreateProductDto, UpdateProductDto, Product } from '@/types/product';
 
 interface ProductFormProps {

@@ -104,7 +104,7 @@ export class ProductsService {
       },
     };
 
-    await this.cacheManager.set(cacheKey, response, this.cacheTtl);
+    await this.cacheManager.set(cacheKey, response, { ttl: this.cacheTtl });
 
     return { ...response, cacheHit: false };
   }
@@ -123,7 +123,7 @@ export class ProductsService {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
 
-    await this.cacheManager.set(cacheKey, product, this.cacheTtl);
+    await this.cacheManager.set(cacheKey, product, { ttl: this.cacheTtl });
 
     return { data: product, cacheHit: false };
   }
